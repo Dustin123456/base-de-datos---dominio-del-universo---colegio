@@ -1,0 +1,41 @@
+--CONSULTA PADRES Y MADRES ACTIVAS
+
+select padre_activo, estudiante.id_representante, estudiante.id_estudiante, estudiante.nombres_estudiante, estudiante.apellidos_estudiante from representante_estudiante 
+inner join  estudiante on estudiante.id_representante=representante_estudiante.id_representante where padre_activo= TRUE ;
+
+select padre_activo, estudiante.id_representante, estudiante.id_estudiante, estudiante.nombres_estudiante, estudiante.apellidos_estudiante from representante_estudiante 
+inner join  estudiante on estudiante.id_representante=representante_estudiante.id_representante where padre_activo= FALSE ;
+
+select madre_activa, estudiante.id_representante, estudiante.id_estudiante, estudiante.nombres_estudiante, estudiante.apellidos_estudiante from representante_estudiante 
+inner join  estudiante on estudiante.id_representante=representante_estudiante.id_representante where madre_activa= TRUE ;
+
+select madre_activa, estudiante.id_representante, estudiante.id_estudiante, estudiante.nombres_estudiante, estudiante.apellidos_estudiante from representante_estudiante 
+inner join  estudiante on estudiante.id_representante=representante_estudiante.id_representante where madre_activa= FALSE ;
+
+select madre_activa, padre_activo, estudiante.id_representante, estudiante.id_estudiante, estudiante.nombres_estudiante, estudiante.apellidos_estudiante from representante_estudiante 
+inner join  estudiante on estudiante.id_representante=representante_estudiante.id_representante where madre_activa= FALSE AND padre_activo = FALSE ;
+
+select madre_activa, padre_activo, estudiante.id_representante, estudiante.id_estudiante, estudiante.nombres_estudiante, estudiante.apellidos_estudiante from representante_estudiante 
+inner join  estudiante on estudiante.id_representante=representante_estudiante.id_representante where madre_activa= TRUE AND padre_activo = TRUE ;
+
+
+
+
+
+-- TUTORES
+
+select curso.profesor_tutor, curso.inicio_periodo, curso.final_periodo, curso.nivel, curso.paralelo, estudiantes_curso.id_estudiante 
+from curso inner join estudiantes_curso on estudiantes_curso.profesor_tutor   = curso.profesor_tutor 
+where estudiantes_curso.inicio_periodo = curso.inicio_periodo ;
+
+
+--APROBADOS Y REPROBADOS
+
+select asignatura, estudiante_materia.id_estudiante, nota1, nota2, recuperacion, resultado, inicio_periodo, final_periodo 
+from  estudiante_materia inner join estudiantes_curso  on estudiante_materia.id_estudiante = estudiantes_curso.id_estudiante  
+order by inicio_periodo desc;
+
+--MOSTRAR CUANTOS HOMBRES Y MUJERES HAY ENTRE LOS ESTUDIANTES
+
+select count (*) from estudiante where genero = 'MASCULINO';
+select count (*) from estudiante  where genero = 'FEMENINO';
