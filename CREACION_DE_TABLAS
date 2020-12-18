@@ -1,0 +1,158 @@
+/*==============================================================*/
+/*                                								*/
+/* 																*/
+/*==============================================================*/
+
+/*==============================================================*/
+/* Table: CURSO                                                 */
+/*==============================================================*/
+create table CURSO (
+   INICIO_PERIODO       VARCHAR(10)          not null,
+   FINAL_PERIODO        VARCHAR(10)          not null,
+   PROFESOR_TUTOR       VARCHAR(50)          not null,
+   NIVEL                VARCHAR(10)          not null,
+   PARALELO             VARCHAR(5)           not null,
+   UBICACION_CURSO      VARCHAR(10)          null,
+   constraint PK_CURSO primary key (INICIO_PERIODO, FINAL_PERIODO, PROFESOR_TUTOR, NIVEL, PARALELO)
+);
+
+
+
+
+/*==============================================================*/
+/* Table: ESTUDIANTE                                            */
+/*==============================================================*/
+create table ESTUDIANTE (
+   ID_ESTUDIANTE        INT2                 not null,
+   ID_REPRESENTANTE     INT2                 not null,
+   CEDULA_ESTUDIANTE    VARCHAR(10)          null,
+   NOMBRES_ESTUDIANTE   VARCHAR(50)          null,
+   APELLIDOS_ESTUDIANTE VARCHAR(50)          null,
+   GENERO               VARCHAR(10)          null,
+   FECHA_DE_NACIMIENTO  DATE                 null,
+   DIRECCION            VARCHAR(30)          null,
+   TELEFONO             VARCHAR(20)          null,
+   constraint PK_ESTUDIANTE primary key (ID_ESTUDIANTE)
+);
+
+/*==============================================================*/
+/* Table: ESTUDIANTES_CURSO                                     */
+/*==============================================================*/
+create table ESTUDIANTES_CURSO (
+   INICIO_PERIODO       VARCHAR(10)          not null,
+   FINAL_PERIODO        VARCHAR(10)          not null,
+   PROFESOR_TUTOR       VARCHAR(50)          not null,
+   NIVEL                VARCHAR(10)          not null,
+   PARALELO             VARCHAR(5)           not null,
+   ID_ESTUDIANTE        INT2                 not null,
+   constraint PK_ESTUDIANTES_CURSO primary key (INICIO_PERIODO, FINAL_PERIODO, PROFESOR_TUTOR, NIVEL, PARALELO, ID_ESTUDIANTE)
+);
+
+
+
+/*==============================================================*/
+/* Table: ESTUDIANTE_MATERIA                                    */
+/*==============================================================*/
+create table ESTUDIANTE_MATERIA (
+   ID_PROFESOR          VARCHAR(10)          not null,
+   ASIGNATURA           VARCHAR(20)          not null,
+   ID_ESTUDIANTE        INT2                 not null,
+   NOTA1                INT2                 null,
+   NOTA2                INT2                 null,
+   RECUPERACION         INT2                 null,
+   RESULTADO            BOOL                 null,
+   constraint PK_ESTUDIANTE_MATERIA primary key (ID_PROFESOR, ASIGNATURA, ID_ESTUDIANTE)
+);
+
+/*==============================================================*/
+/* Table: PERIODO_ACADEMICO                                     */
+/*==============================================================*/
+create table PERIODO_ACADEMICO (
+   INICIO_PERIODO       VARCHAR(10)          not null,
+   FINAL_PERIODO        VARCHAR(10)          not null,
+   ESTUDIANTES_MATRICULADOS INT2                 null,
+   PROFESORES_ACTIVOS   INT2                 null,
+   constraint PK_PERIODO_ACADEMICO primary key (INICIO_PERIODO, FINAL_PERIODO)
+);
+
+/*==============================================================*/
+/* Table: PROFESOR                                              */
+/*==============================================================*/
+create table PROFESOR (
+   ID_PROFESOR          VARCHAR(10)          not null,
+   NOMBRE               VARCHAR(20)          null,
+   ASIGNATURA           VARCHAR(20)          not null,
+   constraint PK_PROFESOR primary key (ID_PROFESOR, ASIGNATURA)
+);
+
+/*==============================================================*/
+/* Table: PROFESORES_CURSO                                      */
+/*==============================================================*/
+create table PROFESORES_CURSO (
+   INICIO_PERIODO       VARCHAR(10)          not null,
+   FINAL_PERIODO        VARCHAR(10)          not null,
+   PROFESOR_TUTOR       VARCHAR(50)          not null,
+   NIVEL                VARCHAR(10)          not null,
+   PARALELO             VARCHAR(5)           not null,
+   ID_PROFESOR          VARCHAR(10)          not null,
+   ASIGNATURA           VARCHAR(20)          not null,
+   constraint PK_PROFESORES_CURSO primary key (INICIO_PERIODO, FINAL_PERIODO, PROFESOR_TUTOR, NIVEL, PARALELO, ID_PROFESOR, ASIGNATURA)
+);
+
+
+/*==============================================================*/
+/* Table: REPRESENTANTE_ESTUDIANTE                              */
+/*==============================================================*/
+create table REPRESENTANTE_ESTUDIANTE (
+   ID_REPRESENTANTE     INT2                 not null,
+   CEDULA_S_            VARCHAR(30)          null,
+   NOMBRES_REPRESENTANTE VARCHAR(100)         null,
+   APELLIDOS_REPRESENTANTE VARCHAR(100)         null,
+   DIRECCION_DOMICILIARIA VARCHAR(30)          null,
+   TELEFONO_DE_DOMICILIO VARCHAR(30)          null,
+   DIRECCION_DE_TRABAJO VARCHAR(60)          null,
+   TELEFONO_DE_TRABAJO  VARCHAR(30)          null,
+   PADRE_ACTIVO         BOOL                 null,
+   MADRE_ACTIVA         BOOL                 null,
+   constraint PK_REPRESENTANTE_ESTUDIANTE primary key (ID_REPRESENTANTE)
+);
+
+alter table CURSO
+   add constraint FK_CURSO_CURSOS_PE_PERIODO_ foreign key (INICIO_PERIODO, FINAL_PERIODO)
+      references PERIODO_ACADEMICO (INICIO_PERIODO, FINAL_PERIODO)
+      on delete restrict on update restrict;
+
+alter table ESTUDIANTE
+   add constraint FK_ESTUDIAN_REPRESENT_REPRESEN foreign key (ID_REPRESENTANTE)
+      references REPRESENTANTE_ESTUDIANTE (ID_REPRESENTANTE)
+      on delete restrict on update restrict;
+
+alter table ESTUDIANTES_CURSO
+   add constraint FK_ESTUDIAN_ESTUDIANT_CURSO foreign key (INICIO_PERIODO, FINAL_PERIODO, PROFESOR_TUTOR, NIVEL, PARALELO)
+      references CURSO (INICIO_PERIODO, FINAL_PERIODO, PROFESOR_TUTOR, NIVEL, PARALELO)
+      on delete restrict on update restrict;
+
+alter table ESTUDIANTES_CURSO
+   add constraint FK_ESTUDIAN_ESTUDIANT_ESTUDIAN foreign key (ID_ESTUDIANTE)
+      references ESTUDIANTE (ID_ESTUDIANTE)
+      on delete restrict on update restrict;
+
+alter table ESTUDIANTE_MATERIA
+   add constraint FK_ESTUDIAN_ESTUDIANT_PROFESOR foreign key (ID_PROFESOR, ASIGNATURA)
+      references PROFESOR (ID_PROFESOR, ASIGNATURA)
+      on delete restrict on update restrict;
+
+alter table ESTUDIANTE_MATERIA
+   add constraint FK_ESTUDIAN_ESTUDIANT_ESTUDIAN foreign key (ID_ESTUDIANTE)
+      references ESTUDIANTE (ID_ESTUDIANTE)
+      on delete restrict on update restrict;
+
+alter table PROFESORES_CURSO
+   add constraint FK_PROFESOR_PROFESORE_CURSO foreign key (INICIO_PERIODO, FINAL_PERIODO, PROFESOR_TUTOR, NIVEL, PARALELO)
+      references CURSO (INICIO_PERIODO, FINAL_PERIODO, PROFESOR_TUTOR, NIVEL, PARALELO)
+      on delete restrict on update restrict;
+
+alter table PROFESORES_CURSO
+   add constraint FK_PROFESOR_PROFESORE_PROFESOR foreign key (ID_PROFESOR, ASIGNATURA)
+      references PROFESOR (ID_PROFESOR, ASIGNATURA)
+      on delete restrict on update restrict;
