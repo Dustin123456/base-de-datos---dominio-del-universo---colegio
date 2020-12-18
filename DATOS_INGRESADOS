@@ -1,0 +1,71 @@
+--INSERCION ESTUDIANTES Y REPRESENTANTES
+insert into representante_estudiante  values 
+( '01', '1111111111 - 2222222222','RAUL JOSE - MARIA MARTHA', 'ZAMBRANO ZAMBRANO - VERA VERA', 'AVENIDA 125 CALLE 120', 
+											  '098282828', 'AVENIDA 130 CALLE 136 - AVENIDA 110 CALLE 120', '098787878- 090909383', TRUE, TRUE );
+insert into representante_estudiante  values 
+( '02', '2626262626', 'LUIS MARIO','GONZALES VERA', 'AVENIDA 115 CALLE 100', 
+											  '098245828', 'AVENIDA 130 CALLE 136', '098787878', FALSE, FALSE);	
+insert into representante_estudiante  values 
+( '03', '1111111134 - 3422222222','CARLOS JOSE - MYRIAM MARIA', 'FLORES ZAMBRANO -  CHOEZ GUANOQUISA', 'AVENIDA 111 CALLE 120', 
+											  '098223828', 'AVENIDA 121 CALLE 116 - AVENIDA 150 CALLE 100', '098567878 - 090769383', TRUE, FALSE );											  
+						
+insert into estudiante  values ('01', '01', '1234567898', 'CARLOS JOSE', 'ZAMBRANO VERA', 'MASCULINO', '12/05/2000', 'AVENIDA 125 CALLE 120', '098287345');
+insert into estudiante  values ('02', '02', '1235554667', 'FERNANDA ESTEFANIA', 'GARCIA MACIAS', 'FEMENINO', '20/10/2001', 'AVENIDA 115 CALLE 100', '0909899838' );
+insert into estudiante  values ('03', '01', '1243434445', 'MARIO VIKTOR', 'ZAMBRANO VERA', 'MASCULINO', '05/07/2003','AVENIDA 125 CALLE 120', '098287345' );
+insert into estudiante  values ('04', '03','1545454567', 'JOSE JOSE', 'FLORES CHOEZ', 'MASCULINO', '12/02/2005', 'AVENIDA 111 CALLE 120', '098223828');
+insert into estudiante  values ('05', '03', '5546776756', 'MARIA MELINA', 'FLORES CHOEZ', 'FEMENINO', '10/05/2001', 'AVENIDA 111 CALLE 120', '098223828');
+
+--select * from estudiante;
+
+
+
+
+
+--PERIODO ACADEMICO
+INSERT INTO periodo_academico(inicio_periodo, final_periodo ) values('2009','2010');
+INSERT INTO periodo_academico(inicio_periodo, final_periodo ) values('2010','2011');
+INSERT INTO periodo_academico(inicio_periodo, final_periodo ) values('2011','2012');
+
+
+--CURSO
+insert into curso  values ( '2009', '2010', 'Ruffy', 'decimo', 'B', '3erPISO-3B');
+insert into curso  values ( '2010', '2011', 'Sergio', 'segundo', 'B',  '2doPISO-1C');
+insert into curso  values ( '2011', '2012', 'Marcelo', 'tercero', 'C',  '3erPISO-5A');
+--select * from curso;
+
+
+
+
+
+
+
+--PROFESORES-ASIGNATURAS
+insert into profesor values ('01', 'Quiñonez', 'Cultura física');
+insert into profesor values ('02','Lionel', 'Sociales');
+insert into profesor values ('03','Lucio', 'Biología');
+insert into profesor values ('04','Adriano', 'Economía');
+
+
+
+
+--ESTUDIANTES- MATERIAS
+INSERT INTO estudiante_materia values ('01', 'Cultura física','01', 10, 10, null, TRUE );
+INSERT INTO estudiante_materia values ('01', 'Cultura física','02', 7, 6, null, FALSE );
+INSERT INTO estudiante_materia values ('02', 'Sociales','03', 10, 6, 10, TRUE );
+INSERT INTO estudiante_materia values ('03', 'Biología','04', 7, 7, null, FALSE );
+INSERT INTO estudiante_materia values ('04', 'Economía','05', 10, 7, null, TRUE );
+
+
+
+--PROFESORES-CURSOS
+insert into profesores_curso values ( '2011', '2012', 'Marcelo', 'tercero', 'C', '04', 'Economía' );
+insert into profesores_curso values ( '2011', '2012', 'Marcelo', 'tercero', 'C', '01', 'Cultura física' );
+insert into profesores_curso values ( '2011', '2012', 'Marcelo', 'tercero', 'C', '03', 'Biología' );
+
+
+--ESTUDIANTE EN CURSO
+insert into estudiantes_curso values ('2009', '2010', 'Ruffy','decimo','B', '01');
+insert into estudiantes_curso values ('2011', '2012', 'Marcelo','tercero','C', '02');
+insert into estudiantes_curso values ('2010', '2011', 'Sergio','segundo','B', '03');
+insert into estudiantes_curso values ('2009', '2010', 'Ruffy','decimo','B', '04');
+insert into estudiantes_curso values ('2011', '2012', 'Marcelo','tercero','C', '05');
